@@ -16,10 +16,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Construção da Imagem Dcoker Build
-        run: echo "Executando o comando Docker build"
-      - name: Envio da Imagem Docker
-        run: echo "Executando o comando Docker push"
+
+      - name: Construção e envio da Imagem Dcoker Build
+        uses: docker/build-push-action@v6
+        with:
+          context: ./src
+          push: true
+          file: ./src/Dockerfile
+          tags: |
+            edsonjunior04/fake-shop:latest
+            edsonjunior04/fake-shop:v${{github.run_number}}
+        
+
 
   cd:
     runs-on: ubuntu-latest
