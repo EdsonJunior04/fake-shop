@@ -42,18 +42,22 @@ kind: Deployment
 metadata:
   name: fakeshop
 spec:
-  replicas: 4
+  replicas: 10
   selector:
     matchLabels:
       app: fakeshop
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometetheus.io/port: '5000'
+        prometetheus.io/path: '/metrics'
       labels:
         app: fakeshop
     spec:
       containers:
       - name: fakeshop
-        image: edsonjunior04/fake-shop
+        image: edsonjunior04/fake-shop:v2
         ports:
         - containerPort: 5000
         env:
